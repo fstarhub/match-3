@@ -129,12 +129,13 @@ const App: React.FC = () => {
       if (items.hammer > 0) {
         const newBoard = board.map(row => [...row]);
         newBoard[r][c] = null;
-        setBoard(newBoard);
+        const gravityBoard = applyGravity(newBoard);
+        setBoard(gravityBoard);
         setItems(prev => ({ ...prev, hammer: prev.hammer - 1 }));
         setActivePowerup(null);
         // 清除旧的提示，鼓励玩家再次请求
         setAiHint(null);
-        resolveBoard(applyGravity(newBoard));
+        resolveBoard(gravityBoard);
       }
       return;
     }
