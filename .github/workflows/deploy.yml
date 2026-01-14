@@ -1,0 +1,42 @@
+name: Deploy Vue Frontend
+
+# 触发条件：master 分支 push 时
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ 安装 Node（构建 Vue 项目）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 3️⃣ 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ 构建 Vue 项目
+      - name: Build project
+        run: npm run build
+
+      # 5️⃣ 上传 dist 到 VPS
+      - name: Upload dist to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "dist/*"
+          target: "/var/www/star-match/dist"
+          strip_components: 1
