@@ -273,7 +273,7 @@ const App: React.FC = () => {
           disabled={loadingHint || moves <= 0 || status !== 'IDLE' || isResolving}
           className="bg-indigo-600/50 border border-indigo-400/30 px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-500 active:scale-95 disabled:opacity-50 disabled:active:scale-100 transition-all whitespace-nowrap shrink-0 ml-2 shadow-inner"
         >
-          {aiHint ? '更新建议' : '获取提示'}
+          {aiHint ? '更新建议' : '获取提1示'}
         </button>
       </div>
 
