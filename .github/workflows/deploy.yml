@@ -29,8 +29,14 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Check SSH Key
-        run: echo "${{ secrets.VPS_SSH_KEY }}" | head -n 3
+      - name: Verify required secrets
+        run: | 
+          [ -n "${{ secrets.VPS_HOST }}" ] || (echo "VPS_HOST is empty" && exit 1)
+          [ -n "${{ secrets.VPS_USER }}" ] || (echo "VPS_USER is empty" && exit 1)
+          [ -n "${{ secrets.VPS_PORT }}" ] || (echo "VPS_PORT is empty" && exit 1)
+          [ -n "${{ secrets.VPS_SSH_KEY }}" ] || (echo "VPS_SSH_KEY is empty" && exit 1)
+          echo "secrets present"
+
 
       # 5️⃣ 上传 dist 到 VPS
       - name: Upload dist to VPS
