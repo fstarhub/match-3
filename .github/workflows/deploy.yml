@@ -29,6 +29,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Check SSH Key
+        run: echo "${{ secrets.VPS_SSH_KEY }}" | head -n 3
+
       # 5️⃣ 上传 dist 到 VPS
       - name: Upload dist to VPS
         uses: appleboy/scp-action@v0.1.7
